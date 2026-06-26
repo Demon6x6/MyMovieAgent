@@ -78,8 +78,9 @@ def main():
 
     print(f"Database aggiornato! Aggiunti {new_additions} nuovi titoli.")
     
-    # Notifica Telegram temporanea
-    messaggio = f"🎬 <b>Agente Aggiornato!</b>\nHo appena aggiunto {new_additions} nuovi titoli al database."
+    # Notifica Telegram finale
+    link_sito = "https://demon6x6.github.io/MyMovieAgent/"
+    messaggio = f"🎬 <b>Agente Aggiornato!</b>\nHo appena aggiunto {new_additions} nuovi titoli al tuo database.\n\n🍿 Guarda il catalogo aggiornato e sfoglia le locandine qui:\n{link_sito}"
     send_telegram_message(messaggio)
 
 if __name__ == "__main__":
