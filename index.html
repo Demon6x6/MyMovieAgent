@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie & TV Agent</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #141414; color: white; }
+        .netflix-red { color: #E50914; }
+        .bg-netflix-red { background-color: #E50914; }
+        /* Effetto ingrandimento al passaggio del mouse sulle locandine */
+        .card:hover { transform: scale(1.05); transition: transform 0.3s ease-in-out; cursor: pointer; }
+    </style>
+</head>
+<body class="min-h-screen font-sans pb-10">
+    
+    <header class="p-5 sticky top-0 z-50 bg-black/95 shadow-lg border-b border-gray-800">
+        <h1 class="text-3xl font-bold netflix-red mb-4">🎬 My Weekend Agent</h1>
+        
+        <div class="flex flex-col md:flex-row gap-4">
+            <div class="flex-1">
+                <input type="text" id="searchInput" placeholder="Cerca un titolo o una parola chiave..." class="w-full p-2 rounded bg-gray-800 text-white border border-gray-700 focus:border-red-600 outline-none transition-colors">
+                <div class="flex gap-4 mt-2 text-sm text-gray-400">
+                    <label class="cursor-pointer"><input type="checkbox" id="searchTitle" checked class="mr-1 accent-red-600"> Cerca nel Titolo</label>
+                    <label class="cursor-pointer"><input type="checkbox" id="searchPlot" checked class="mr-1 accent-red-600"> Cerca nella Trama</label>
+                </div>
+            </div>
+            
+            <select id="typeFilter" class="p-2 bg-gray-800 rounded border border-gray-700 outline-none cursor-pointer">
+                <option value="all">Tutti (Film e Serie)</option>
+                <option value="movies">Solo Film</option>
+                <option value="tv">Solo Serie TV</option>
+            </select>
+            
+            <select id="sortFilter" class="p-2 bg-gray-800 rounded border border-gray-700 outline-none cursor-pointer">
+                <option value="newest">Uscite più recenti</option>
+                <option value="oldest">Uscite meno recenti</option>
+                <option value="rating">Voto più alto</option>
+            </select>
+        </div>
+    </header>
+
+    <main class="p-5">
+        <div id="resultsInfo" class="mb-6 text-gray-400 font-semibold text-lg">Caricamento in corso...</div>
+        <div id="mediaGrid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+            </div>
+    </main>
+
+    <script>
+        let allMedia = [];
+
+        async function loadData() {
+            try {
+                // Legge il database aggiornato dal nostro Agente Python
+                const response = await fetch('database.json');
+                const db = await response.json();
+                
+                // Uniamo film e serie in un unico grande elenco per facilitarci il filtraggio
+                Object.values(db.movies).forEach(m => {
+                    allMedia.push({...m, media_type: 'movies', date: m.release_date, title: m.title || m.original_title});
+                });
+                Object.values(db.tv_shows).forEach(t => {
+                    allMedia.push({...t, media_type: 'tv', date: t.first_air_date, title: t.name || t.original_name});
+                });
+                
+                renderGrid();
+            } catch (e) {
+                document.getElementById('resultsInfo').innerText = "Ops! Errore nel caricamento del database o file vuoto.";
+            }
+        }
+
+        function renderGrid() {
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            const searchTitle = document.getElementById('searchTitle').checked;
+            const searchPlot = document.getElementById('searchPlot').checked;
+            const typeFilter = document.getElementById('typeFilter').value;
+            const sortFilter = document.getElementById('sortFilter').value;
+
+            // Filtriamo
+            let filtered = allMedia.filter(item => {
+                if (typeFilter !== 'all' && item.media_type !== typeFilter) return false;
+                
+                if (searchInput) {
+                    const inTitle = searchTitle && item.title && item.title.toLowerCase().includes(searchInput);
+                    const inPlot = searchPlot && item.overview && item.overview.toLowerCase().includes(searchInput);
+                    if (!inTitle && !inPlot) return false; // Se non è né nel titolo né nella trama, scartalo
+                }
+                return true;
+            });
+
+            // Ordiniamo
+            filtered.sort((a, b) => {
+                if (sortFilter === 'newest') return new Date(b.date || 0) - new Date(a.date || 0);
+                if (sortFilter === 'oldest') return new Date(a.date || 0) - new Date(b.date || 0);
+                if (sortFilter === 'rating') return (b.vote_average || 0) - (a.vote_average || 0);
+            });
+
+            // Disegniamo la griglia
+            const grid = document.getElementById('mediaGrid');
+            grid.innerHTML = '';
+            document.getElementById('resultsInfo').innerText = `Trovati ${filtered.length} risultati visibili`;
+
+            filtered.forEach(item => {
+                // Gestione locandina assente
+                const poster = item.poster_path ? `https://image.tmdb.org/t/p/w500${item.poster_path}` : 'https://via.placeholder.com/500x750/333333/ffffff?text=No+Poster';
+                
+                // Trasformiamo il voto da scala decimi a scala 5 stelle (es. 8.4 -> 4.2)
+                const rating = item.vote_average ? (item.vote_average / 2).toFixed(1) : 'N/A';
+                
+                // Formattazione data solo anno
+                const year = item.date ? item.date.substring(0,4) : 'N/A';
+                
+                const card = document.createElement('div');
+                card.className = 'card relative rounded-lg overflow-hidden shadow-xl bg-gray-900 group';
+                card.innerHTML = `
+                    <img src="${poster}" alt="${item.title}" class="w-full h-full object-cover aspect-[2/3]" loading="lazy">
+                    <div class="absolute inset-0 bg-black bg-opacity-90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 flex flex-col justify-between">
+                        <div>
+                            <h2 class="text-md font-bold mb-1 text-white">${item.title}</h2>
+                            <p class="text-xs text-gray-400 mb-2">${year} | ⭐️ ${rating} / 5</p>
+                            <p class="text-xs text-gray-300 line-clamp-6 leading-tight">${item.overview || 'Trama non disponibile.'}</p>
+                        </div>
+                        <a href="https://www.youtube.com/results?search_query=trailer+ita+${encodeURIComponent(item.title)}" target="_blank" class="block w-full mt-3 text-sm font-semibold text-center bg-netflix-red text-white py-2 rounded transition hover:bg-red-700">
+                            Guarda Trailer
+                        </a>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Ascoltiamo i cambiamenti dell'utente in tempo reale
+        document.getElementById('searchInput').addEventListener('input', renderGrid);
+        document.getElementById('searchTitle').addEventListener('change', renderGrid);
+        document.getElementById('searchPlot').addEventListener('change', renderGrid);
+        document.getElementById('typeFilter').addEventListener('change', renderGrid);
+        document.getElementById('sortFilter').addEventListener('change', renderGrid);
+
+        // Avvio automatico al caricamento della pagina
+        loadData();
+    </script>
+</body>
+</html>
