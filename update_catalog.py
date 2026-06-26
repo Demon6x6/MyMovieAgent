@@ -29,7 +29,7 @@ def fetch_all_streaming_titles(content_type="movie"):
                 "language": "it-IT",
                 "region": "IT",
                 "watch_region": "IT",
-                "with_watch_providers": "8|119|337|350|390|2|3", # Netflix, Prime, Disney, Apple, Now, ecc.
+                "with_watch_monetization_types": "flatrate|free|ads|rent|buy", # La chiave per avere TUTTE le piattaforme!
                 "page": page
             }
             
