@@ -1,0 +1,837 @@
+{
+    "movies": {
+        "1592105": {
+            "adult": false,
+            "backdrop_path": null,
+            "genre_ids": [
+                35
+            ],
+            "id": 1592105,
+            "title": "Между нами, девочками",
+            "original_language": "ru",
+            "original_title": "Между нами, девочками",
+            "overview": "",
+            "popularity": 0.7299,
+            "poster_path": null,
+            "release_date": "2026-09-10",
+            "softcore": false,
+            "video": false,
+            "vote_average": 0.0,
+            "vote_count": 0
+        },
+        "1703103": {
+            "adult": false,
+            "backdrop_path": "/ts3Q7z59RdDZpqsE7dvtgWszKkj.jpg",
+            "genre_ids": [
+                28,
+                18,
+                878
+            ],
+            "id": 1703103,
+            "title": "Addicted to Change",
+            "original_language": "en",
+            "original_title": "Addicted to Change",
+            "overview": "",
+            "popularity": 0.375,
+            "poster_path": "/7Eewbbdv7MRsV87jlRWvwp1EFFE.jpg",
+            "release_date": "2026-07-30",
+            "softcore": false,
+            "video": false,
+            "vote_average": 0.0,
+            "vote_count": 0
+        },
+        "1548556": {
+            "adult": false,
+            "backdrop_path": "/tllzCV6zHJajsU0OtfExcgziN8O.jpg",
+            "genre_ids": [
+                10402,
+                99
+            ],
+            "id": 1548556,
+            "title": "I Was a Teenage Sex Pistol",
+            "original_language": "en",
+            "original_title": "I Was a Teenage Sex Pistol",
+            "overview": "",
+            "popularity": 0.7472,
+            "poster_path": "/o8QZlW1h57xgNajlw7AzyO6bGMo.jpg",
+            "release_date": "2026-07-02",
+            "softcore": false,
+            "video": false,
+            "vote_average": 0.0,
+            "vote_count": 0
+        },
+        "1141970": {
+            "adult": false,
+            "backdrop_path": "/vElyR7rR3EOAmW3ZeLOdGhFWaeu.jpg",
+            "genre_ids": [
+                53,
+                18
+            ],
+            "id": 1141970,
+            "title": "ครัวสาว",
+            "original_language": "th",
+            "original_title": "ครัวสาว",
+            "overview": "",
+            "popularity": 0.3562,
+            "poster_path": "/1CdRrEcwaFEXMNyhlwRkMSaSpG3.jpg",
+            "release_date": "2026-07-02",
+            "softcore": false,
+            "video": false,
+            "vote_average": 0.0,
+            "vote_count": 0
+        },
+        "1716365": {
+            "adult": false,
+            "backdrop_path": null,
+            "genre_ids": [
+                35
+            ],
+            "id": 1716365,
+            "title": "Ryan Hamilton: This Just Hit Me",
+            "original_language": "en",
+            "original_title": "Ryan Hamilton: This Just Hit Me",
+            "overview": "",
+            "popularity": 1.8044,
+            "poster_path": "/e69aIyhBLJE1RcYT61K3cHv6UKt.jpg",
+            "release_date": "2026-06-23",
+            "softcore": false,
+            "video": false,
+            "vote_average": 6.0,
+            "vote_count": 2
+        },
+        "614945": {
+            "adult": false,
+            "backdrop_path": "/2WU6Y6aonzD6uAaCmNnEFlesxxJ.jpg",
+            "genre_ids": [
+                10749,
+                35
+            ],
+            "id": 614945,
+            "title": "Messaggi per Isabelle",
+            "original_language": "en",
+            "original_title": "Voicemails for Isabelle",
+            "overview": "Gli intimi ed esilaranti messaggi vocali che una giovane donna lascia alla sorella defunta sono inoltrati a sua insaputa a uno sconosciuto che si innamora di lei a distanza.",
+            "popularity": 177.4807,
+            "poster_path": "/oaxqHkmpDNTNYnEr79bW6k6VpUA.jpg",
+            "release_date": "2026-06-19",
+            "softcore": false,
+            "video": false,
+            "vote_average": 8.15,
+            "vote_count": 224
+        },
+        "1717809": {
+            "adult": false,
+            "backdrop_path": null,
+            "genre_ids": [
+                10402
+            ],
+            "id": 1717809,
+            "title": "RADWIMPS 20th ANNIVERSARY LIVE TOUR",
+            "original_language": "ja",
+            "original_title": "RADWIMPS 20th ANNIVERSARY LIVE TOUR",
+            "overview": "",
+            "popularity": 0.8068,
+            "poster_path": "/1ua8q6So5Ch6ya4TImmjO6UeKAM.jpg",
+            "release_date": "2026-06-19",
+            "softcore": false,
+            "video": false,
+            "vote_average": 0.0,
+            "vote_count": 0
+        },
+        "1702960": {
+            "adult": false,
+            "backdrop_path": "/EokTYzRRRuICYnIJ6n8qHYWWMM.jpg",
+            "genre_ids": [
+                35
+            ],
+            "id": 1702960,
+            "title": "GOAT Pandemonium Ge on all tempo",
+            "original_language": "id",
+            "original_title": "GOAT Pandemonium Ge on all tempo",
+            "overview": "",
+            "popularity": 0.9526,
+            "poster_path": "/aeSAvkv3xsLYJd7w07wZiBq0GKu.jpg",
+            "release_date": "2026-06-18",
+            "softcore": false,
+            "video": false,
+            "vote_average": 0.0,
+            "vote_count": 0
+        },
+        "1477317": {
+            "adult": false,
+            "backdrop_path": "/wQOhbCP6H8bO5ddlXDZT207orew.jpg",
+            "genre_ids": [
+                10749,
+                18
+            ],
+            "id": 1477317,
+            "title": "È colpa tua: Londra",
+            "original_language": "en",
+            "original_title": "Your Fault: London",
+            "overview": "Nick e Noah stanno per intraprendere avventure che cambieranno per sempre le loro vite e che rischiano di separarli: Nick è impegnato negli affari con il padre, mentre Noah inizia un nuovo capitolo all'Università di Oxford. Vivendo vite separate e incontrando nuove persone, si ritrovano invischiati in tentazioni, rivalità e tradimenti, e il loro legame viene messo alla prova come mai prima d'ora. Mentre i segreti vengono a galla e le tentazioni si fanno sempre più forti, dovranno lottare per restare uniti, o rischieranno di perdere tutto.",
+            "popularity": 171.0105,
+            "poster_path": "/AjhkEhNvJf7xaqrnahl0zjjgOgq.jpg",
+            "release_date": "2026-06-17",
+            "softcore": false,
+            "video": false,
+            "vote_average": 7.521,
+            "vote_count": 119
+        },
+        "1715818": {
+            "adult": false,
+            "backdrop_path": "/7dYBC45o5xXuVw96W8yNjxSb0ID.jpg",
+            "genre_ids": [
+                99
+            ],
+            "id": 1715818,
+            "title": "A Spark Into A Flame: Hamilton & Hip Hop",
+            "original_language": "en",
+            "original_title": "A Spark Into A Flame: Hamilton & Hip Hop",
+            "overview": "",
+            "popularity": 0.3287,
+            "poster_path": "/lfFxXrQzZPY3LHkNhxwmGgTvWQj.jpg",
+            "release_date": "2026-06-16",
+            "softcore": false,
+            "video": false,
+            "vote_average": 1.0,
+            "vote_count": 1
+        },
+        "1121698": {
+            "adult": false,
+            "backdrop_path": "/x2SpfE3CNKUTtAUhRudY3tt3kFx.jpg",
+            "genre_ids": [
+                35,
+                10749
+            ],
+            "id": 1121698,
+            "title": "L'amor fuggente",
+            "original_language": "it",
+            "original_title": "L'amor fuggente",
+            "overview": "Fil (Lorenzo Adorni) e Mia (Caterina Shulha) sono una coppia affiatata e vivono insieme da anni, sebbene molto diversi per carattere e attitudini: eclettico regista emergente lui, metodica professoressa di matematica lei. La loro routine viene rotta da un litigio che culmina in un’inaspettata proposta di matrimonio da parte di Mia e la conseguente fuga di Fil. Questo evento innesca un insieme di storie che si intrecciano in un unico racconto coinvolgendo parenti e amici della coppia. Vite e amori a tutte le età si scontreranno e si mescoleranno per poi concludersi in un rocambolesco finale a sorpresa.",
+            "popularity": 0.7105,
+            "poster_path": "/9XThuMk6bazvlydJRGqA56bcj7N.jpg",
+            "release_date": "2026-06-16",
+            "softcore": false,
+            "video": false,
+            "vote_average": 0.0,
+            "vote_count": 0
+        },
+        "1451344": {
+            "adult": false,
+            "backdrop_path": "/zZQQ5dd7jq1PfUnWTT9qH4RMf5a.jpg",
+            "genre_ids": [
+                35,
+                28
+            ],
+            "id": 1451344,
+            "title": "Husbands in Action",
+            "original_language": "ko",
+            "original_title": "남편들",
+            "overview": "Un detective fa squadra con il nuovo marito della sua ex moglie per trovare chi l'ha rapita. Riusciranno a mettere da parte le divergenze per compiere un salvataggio spericolato?",
+            "popularity": 115.5778,
+            "poster_path": "/A01Ca3GfoUZ192ebgHHj6MYOG35.jpg",
+            "release_date": "2026-06-19",
+            "softcore": false,
+            "video": false,
+            "vote_average": 7.568,
+            "vote_count": 44
+        },
+        "1511549": {
+            "adult": false,
+            "backdrop_path": "/jUpuMPCQiNSYi4QxeCIGFUlPizn.jpg",
+            "genre_ids": [
+                35,
+                10749
+            ],
+            "id": 1511549,
+            "title": "Ancora più sexy",
+            "original_language": "it",
+            "original_title": "Ancora più sexy",
+            "overview": "Si riprende la storia di Maddalena (Diana Del Bufalo) tre anni dopo il suo primo, rocambolesco incontro con il suo irriverente spirito guida: la pornostar Valentina Nappi. Questa volta, la vita di Maddalena sembra finalmente al suo posto: è una scrittrice affermata, felicemente fidanzata con Vanni, compagno amorevole e brillante editore. Ma quando Valentina riappare all’improvviso, pronta a scombinare di nuovo le carte, Maddalena si ritrova a mettere in discussione tutto: il suo rapporto, le sue certezze, e persino l’idea stessa di felicità. L’incontro con Bruno darà il colpo di grazia, spingendola a una nuova consapevolezza: il partner perfetto non esiste. E forse va bene così.",
+            "popularity": 7.0361,
+            "poster_path": "/cQYHYSnHf1A853xoNn6Qq6lm2JO.jpg",
+            "release_date": "2026-06-12",
+            "softcore": false,
+            "video": false,
+            "vote_average": 5.095,
+            "vote_count": 21
+        },
+        "1501018": {
+            "adult": false,
+            "backdrop_path": "/7ImZeJiXNcZYKruKEqMzyW3CwVL.jpg",
+            "genre_ids": [
+                35,
+                80
+            ],
+            "id": 1501018,
+            "title": "Una famiglia di bastardi",
+            "original_language": "fr",
+            "original_title": "Une Famille De Bâtards",
+            "overview": "Mohamed Akrour, un giovane che eredita a sorpresa l'azienda di famiglia e scopre che è una copertura per il gioco d'azzardo illegale e la prostituzione. Tra rivalità debiti crescenti e il fascino dei soldi facili, Mohamed deve anche gestire l'arrivo dei suoi fratellastri, che deve proteggere…mentre viene trascinato in un mondo criminale violento e spietato.",
+            "popularity": 14.7028,
+            "poster_path": "/zuiZDJcjlNWB6EcXHer06u9BQke.jpg",
+            "release_date": "2026-06-12",
+            "softcore": false,
+            "video": false,
+            "vote_average": 5.3,
+            "vote_count": 46
+        },
+        "1020047": {
+            "adult": false,
+            "backdrop_path": "/6pb3DTtHYh6ChqsmX9yFEX9GXVt.jpg",
+            "genre_ids": [
+                18,
+                80
+            ],
+            "id": 1020047,
+            "title": "La mano di Dante",
+            "original_language": "en",
+            "original_title": "In the Hand of Dante",
+            "overview": "Un solitario e disilluso studioso viene ingaggiato dalla mafia per autenticare un misterioso manoscritto riemerso nei bassifondi di New York: l’originale perduto della *Divina Commedia*. Sconvolto dalla scoperta e in cerca di rivalsa, l'uomo decide di tradire i mandanti e fuggire con il prezioso volume insieme alla donna che ama. Il furto scatena una pericolosa caccia all’uomo e una cospirazione globale.  Parallelamente, la storia si sposta nell’Italia del XIV secolo. Un giovane Dante Alighieri, intrappolato in un matrimonio infelice e in piena crisi spirituale, fugge in Sicilia per inseguire l’ispirazione. Qui, guidato da un enigmatico mentore, dà forma alla sua visione poetica e scrive la *Commedia*.  Due uomini, separati dai secoli ma legati dallo stesso destino, compiono un viaggio dalla dannazione alla salvezza, mossi dall’amore, dalla bellezza e dalla follia della creazione.",
+            "popularity": 41.605,
+            "poster_path": "/nPPIufTBnzEg0d7NoR5RLL1oPra.jpg",
+            "release_date": "2025-09-03",
+            "softcore": false,
+            "video": false,
+            "vote_average": 3.9,
+            "vote_count": 9
+        },
+        "1699155": {
+            "adult": false,
+            "backdrop_path": "/oGD1dZvojZssnd9Ua6RUalEEHQu.jpg",
+            "genre_ids": [
+                99,
+                80
+            ],
+            "id": 1699155,
+            "title": "Maternal Instinct: Il caso Taylor Parker",
+            "original_language": "en",
+            "original_title": "Maternal Instinct",
+            "overview": "La polizia ferma una donna che sostiene di aver appena partorito, ma la neonata e il sangue non sono suoi. Questo documentario true crime svela un complicato intreccio di menzogne.",
+            "popularity": 21.5089,
+            "poster_path": "/4KdmT71AGzDMp5hJbAu9vysKQKT.jpg",
+            "release_date": "2026-06-12",
+            "softcore": false,
+            "video": false,
+            "vote_average": 7.118,
+            "vote_count": 76
+        },
+        "1560681": {
+            "adult": false,
+            "backdrop_path": "/2D3W3Jp0VYsLhXTEfnvhbMvQEzk.jpg",
+            "genre_ids": [
+                53,
+                9648,
+                80
+            ],
+            "id": 1560681,
+            "title": "I colori del male: Nero",
+            "original_language": "pl",
+            "original_title": "Kolory zła: Czerń",
+            "overview": "Quando un ragazzino scompare in una cittadina sonnolenta, un procuratore appena trasferito sul luogo inizia a scoprire collegamenti inaspettati con una vecchia indagine.",
+            "popularity": 24.4624,
+            "poster_path": "/bQV434JB05gfRM4KaILzTOF0l6F.jpg",
+            "release_date": "2026-06-10",
+            "softcore": false,
+            "video": false,
+            "vote_average": 7.06,
+            "vote_count": 92
+        },
+        "1710203": {
+            "adult": false,
+            "backdrop_path": "/fV0Y5uo3kwStaPhgT0AieLENFaw.jpg",
+            "genre_ids": [
+                35
+            ],
+            "id": 1710203,
+            "title": "Tony Hinchcliffe: Man of the People",
+            "original_language": "en",
+            "original_title": "Tony Hinchcliffe: Man of the People",
+            "overview": "In questo speciale dai toni taglienti, Tony Hinchcliffe sale sul palco per dimostrare che non ci sono argomenti tabù e che neanche il pubblico è off limits.",
+            "popularity": 0.5179,
+            "poster_path": "/btK2kz5XgoMdvJfOw2axKj4P5ja.jpg",
+            "release_date": "2026-06-09",
+            "softcore": false,
+            "video": false,
+            "vote_average": 4.25,
+            "vote_count": 4
+        },
+        "1558796": {
+            "adult": false,
+            "backdrop_path": "/bfJ2MvS4wixkQ7tQX0a87q1XYlE.jpg",
+            "genre_ids": [
+                35
+            ],
+            "id": 1558796,
+            "title": "Never Change!",
+            "original_language": "en",
+            "original_title": "Never Change!",
+            "overview": "",
+            "popularity": 21.0401,
+            "poster_path": "/yuNToCHZyZybJQ89HSiAR91JEiI.jpg",
+            "release_date": "2026-06-09",
+            "softcore": false,
+            "video": false,
+            "vote_average": 6.136,
+            "vote_count": 11
+        },
+        "1712330": {
+            "adult": false,
+            "backdrop_path": "/acgLYpepLEJVuJ5Gorr8qr4LVQJ.jpg",
+            "genre_ids": [
+                99
+            ],
+            "id": 1712330,
+            "title": "Messi: The Forgotten Tape",
+            "original_language": "en",
+            "original_title": "Messi: The Forgotten Tape",
+            "overview": "",
+            "popularity": 0.6724,
+            "poster_path": "/tehQ9xAsLDXK5Wv31Zzph84urjb.jpg",
+            "release_date": "2026-06-06",
+            "softcore": false,
+            "video": false,
+            "vote_average": 0.0,
+            "vote_count": 0
+        }
+    },
+    "tv_shows": {
+        "296206": {
+            "adult": false,
+            "backdrop_path": "/ag85RWGhenAV2bD1vuVCC0SaB7X.jpg",
+            "genre_ids": [
+                10759,
+                80,
+                18
+            ],
+            "id": 296206,
+            "origin_country": [
+                "KR"
+            ],
+            "original_language": "ko",
+            "original_name": "김부장",
+            "overview": "",
+            "popularity": 8.6589,
+            "poster_path": "/eKJNWq4akdrviR9qEF6xPhzKQU.jpg",
+            "first_air_date": "2026-06-26",
+            "softcore": false,
+            "name": "김부장",
+            "vote_average": 10.0,
+            "vote_count": 1
+        },
+        "289763": {
+            "adult": false,
+            "backdrop_path": "/zftF4KDGuhAGIA50bywcCXPjz5f.jpg",
+            "genre_ids": [
+                35,
+                18
+            ],
+            "id": 289763,
+            "origin_country": [
+                "KR"
+            ],
+            "original_language": "ko",
+            "original_name": "내일도 출근!",
+            "overview": "Cha Ji-yoon, impiegata da sette anni, è ormai stanca sia del lavoro che dell'amore. La sua vita si intreccia inaspettatamente con quella del suo scontroso capo Kang Si-woo. Dietro i suoi modi freddi, però, Ji-yoon scopre un uomo premuroso e sincero. Tra giornate in ufficio tutte uguali, imprevisti sul lavoro e ferite di passate delusioni amorose, i due diventano insostituibili l'uno per l'altra.",
+            "popularity": 61.4133,
+            "poster_path": "/6MELksXL65sIWNMZHR8Z9nLt1DE.jpg",
+            "first_air_date": "2026-06-22",
+            "softcore": false,
+            "name": "Ci vediamo domani al lavoro!",
+            "vote_average": 8.2,
+            "vote_count": 6
+        },
+        "323842": {
+            "adult": false,
+            "backdrop_path": "/r3CZgVHhSvaASQke88mTFhcW92c.jpg",
+            "genre_ids": [
+                99
+            ],
+            "id": 323842,
+            "origin_country": [
+                "BR"
+            ],
+            "original_language": "pt",
+            "original_name": "Várzea: Onde Nasce o Futebol",
+            "overview": "",
+            "popularity": 4.2931,
+            "poster_path": "/hw1GzjpTcxhhgaI5Rd4s6EP3gbX.jpg",
+            "first_air_date": "2026-06-20",
+            "softcore": false,
+            "name": "Várzea: Onde Nasce o Futebol",
+            "vote_average": 10.0,
+            "vote_count": 2
+        },
+        "296285": {
+            "adult": false,
+            "backdrop_path": "/n4B2dVVScH4L4Scvy7mTboYcfGQ.jpg",
+            "genre_ids": [
+                80,
+                9648,
+                18
+            ],
+            "id": 296285,
+            "origin_country": [
+                "ES"
+            ],
+            "original_language": "es",
+            "original_name": "Oasis",
+            "overview": "In un esclusivo resort per famiglie ricchissime, tra spiagge private, feste e sicurezza impenetrabile, una misteriosa scomparsa trasforma la vacanza perfetta in una trappola. Mentre la polizia blocca ogni uscita, ospiti e dipendenti diventano sospettati e vecchi segreti minacciano di venire a galla.",
+            "popularity": 80.8116,
+            "poster_path": "/vWBtcjETIUd45OoIULEqc6qZxM7.jpg",
+            "first_air_date": "2026-06-19",
+            "softcore": false,
+            "name": "Oasis Resort",
+            "vote_average": 6.318,
+            "vote_count": 11
+        },
+        "278178": {
+            "adult": false,
+            "backdrop_path": "/z0R6ToCsMMkLwuQXjzzdd1QCdJv.jpg",
+            "genre_ids": [
+                18,
+                9648,
+                80
+            ],
+            "id": 278178,
+            "origin_country": [
+                "US"
+            ],
+            "original_language": "en",
+            "original_name": "I Will Find You",
+            "overview": "Incarcerato ingiustamente per l'omicidio del figlio, un padre intraprende una disperata missione per ritrovarlo dopo aver scoperto che potrebbe essere ancora vivo.",
+            "popularity": 200.3291,
+            "poster_path": "/9dBe3lN3LfWyBAWGXflVEVCWrpt.jpg",
+            "first_air_date": "2026-06-18",
+            "softcore": false,
+            "name": "Ovunque tu sia",
+            "vote_average": 8.446,
+            "vote_count": 120
+        },
+        "325035": {
+            "adult": false,
+            "backdrop_path": "/rj7oUXbDOFi6pxTnl8Jj2BoeTfK.jpg",
+            "genre_ids": [
+                10764
+            ],
+            "id": 325035,
+            "origin_country": [
+                "JP"
+            ],
+            "original_language": "ja",
+            "original_name": "King & Princeがまちあわせ in LA",
+            "overview": "",
+            "popularity": 0.9605,
+            "poster_path": "/ewDZMgoLYi7HrCYXKpqW7pH0w5v.jpg",
+            "first_air_date": "2026-06-17",
+            "softcore": false,
+            "name": "King & Princeがまちあわせ in LA",
+            "vote_average": 0.0,
+            "vote_count": 0
+        },
+        "322928": {
+            "adult": false,
+            "backdrop_path": "/wJyvHrbtYNiPkGjvMocAzHTuw9g.jpg",
+            "genre_ids": [
+                10764
+            ],
+            "id": 322928,
+            "origin_country": [
+                "US"
+            ],
+            "original_language": "en",
+            "original_name": "Million Dollar Nannies",
+            "overview": "",
+            "popularity": 3.4909,
+            "poster_path": "/i16LcTs83PG4D6vGiUC0dL8Fgcb.jpg",
+            "first_air_date": "2026-06-17",
+            "softcore": false,
+            "name": "Million Dollar Nannies",
+            "vote_average": 0.0,
+            "vote_count": 0
+        },
+        "322430": {
+            "adult": false,
+            "backdrop_path": "/hGCQ0tsJMpKjfrnCyYY0kMY2kY1.jpg",
+            "genre_ids": [
+                18,
+                10766
+            ],
+            "id": 322430,
+            "origin_country": [
+                "ZA"
+            ],
+            "original_language": "zu",
+            "original_name": "The Polygamist",
+            "overview": "Jonasi Gomora è un imprenditore che si è costruito da solo; e grazie a determinazione e intuito è diventato uno dei CEO più influenti del Paese, simbolo di successo e rispettabilità.",
+            "popularity": 104.0739,
+            "poster_path": "/oru5lVRrxkeE1OttlRo055nIN2j.jpg",
+            "first_air_date": "2026-06-12",
+            "softcore": false,
+            "name": "Il Poligamo",
+            "vote_average": 8.3,
+            "vote_count": 40
+        },
+        "284631": {
+            "adult": false,
+            "backdrop_path": "/hAuYDYBgLJ1qIPoAOM7yOD56uCp.jpg",
+            "genre_ids": [
+                80,
+                18
+            ],
+            "id": 284631,
+            "origin_country": [
+                "IN"
+            ],
+            "original_language": "hi",
+            "original_name": "राख",
+            "overview": "Quando due adolescenti scompaiono, una famiglia unita viene sconvolta e la città è sull'orlo del baratro. Determinato a scoprire la verità, un agente implacabile guida una caccia all'uomo a livello nazionale che lo trascina in un mondo di violenza e depravazione umana.",
+            "popularity": 433.6121,
+            "poster_path": "/5MbNy94ia4ZLf8OGtSfSjjlxxWN.jpg",
+            "first_air_date": "2026-06-12",
+            "softcore": false,
+            "name": "Raakh",
+            "vote_average": 9.0,
+            "vote_count": 4
+        },
+        "324115": {
+            "adult": false,
+            "backdrop_path": "/gC6NyZkkyxwzip33k6XJ5ngP0dy.jpg",
+            "genre_ids": [
+                80,
+                18
+            ],
+            "id": 324115,
+            "origin_country": [
+                "TH"
+            ],
+            "original_language": "th",
+            "original_name": "ทนายปีศาจ",
+            "overview": "Quando un giovane avvocato di saldi principi diventa il principale indagato per l'omicidio del figlio di un alto funzionario di polizia, è costretto ad allearsi con l'“avvocato senza scrupoli”, sfruttando ogni scappatoia legale per dimostrare la propria innocenza.",
+            "popularity": 14.8349,
+            "poster_path": "/oLmVnnJFdHvnaGB2asEebnbE4ly.jpg",
+            "first_air_date": "2026-06-11",
+            "softcore": false,
+            "name": "The Evil Lawyer",
+            "vote_average": 7.083,
+            "vote_count": 12
+        },
+        "312493": {
+            "adult": false,
+            "backdrop_path": "/cUNHl2RBFO7qNoAhmRyML0BdWsY.jpg",
+            "genre_ids": [
+                18,
+                10759
+            ],
+            "id": 312493,
+            "origin_country": [
+                "JP"
+            ],
+            "original_language": "ja",
+            "original_name": "喧嘩独学",
+            "overview": "Un ragazzo delle superiori vittima di bullismo diventa una celebrità da un giorno all'altro dopo che un video diventa virale. Ma quando la sua improvvisa fama si trasforma in amarezza, dovrà imparare a difendersi da solo.",
+            "popularity": 32.3596,
+            "poster_path": "/unPNdC5jS5UCrk8jmQGpzGp1uIa.jpg",
+            "first_air_date": "2026-06-11",
+            "softcore": false,
+            "name": "Viral Hit",
+            "vote_average": 7.6,
+            "vote_count": 27
+        },
+        "323660": {
+            "adult": false,
+            "backdrop_path": "/2JECUzaIiv8EIm2kKSLdkFk1tf9.jpg",
+            "genre_ids": [
+                10767
+            ],
+            "id": 323660,
+            "origin_country": [
+                "US"
+            ],
+            "original_language": "en",
+            "original_name": "The Rest Is Football",
+            "overview": "I re del calcio Gary Lineker, Alan Shearer e Micah Richards presentano da New York una dose giornaliera di battute, analisi e opinioni durante i mondiali 2026.",
+            "popularity": 5.3405,
+            "poster_path": "/jLeffM85zW1J8TvkidRtO9pVwiJ.jpg",
+            "first_air_date": "2026-06-10",
+            "softcore": false,
+            "name": "The Rest Is Football",
+            "vote_average": 0.0,
+            "vote_count": 0
+        },
+        "322803": {
+            "adult": false,
+            "backdrop_path": "/vOQUiJ8sokhHTUzaH8VO0fDsEXk.jpg",
+            "genre_ids": [
+                10764
+            ],
+            "id": 322803,
+            "origin_country": [
+                "US"
+            ],
+            "original_language": "en",
+            "original_name": "Outlast: The Jungle",
+            "overview": "Sedici concorrenti su una remota isola tropicale devono sopravvivere agli elementi, battere gli avversari e fare gioco di squadra per un montepremi da un milione di dollari.",
+            "popularity": 8.5706,
+            "poster_path": "/mkhpV2EgA3S4xFyl7KPOpxORa04.jpg",
+            "first_air_date": "2026-06-10",
+            "softcore": false,
+            "name": "Outlast - Gioco di squadra: La giungla",
+            "vote_average": 8.4,
+            "vote_count": 7
+        },
+        "320294": {
+            "adult": false,
+            "backdrop_path": "/aCKP7Gvmml5iti7SUllZxEzZPoO.jpg",
+            "genre_ids": [
+                35,
+                18
+            ],
+            "id": 320294,
+            "origin_country": [
+                "TR"
+            ],
+            "original_language": "tr",
+            "original_name": "Doğanın Kanunu",
+            "overview": "",
+            "popularity": 14.3935,
+            "poster_path": "/4gDo5lVOzH9hkfpW7c29gHdIOHA.jpg",
+            "first_air_date": "2026-06-10",
+            "softcore": false,
+            "name": "Doğanın Kanunu",
+            "vote_average": 9.0,
+            "vote_count": 1
+        },
+        "260592": {
+            "adult": false,
+            "backdrop_path": "/to5eI3AWbT4spz1K58mIK5HQRbD.jpg",
+            "genre_ids": [
+                18
+            ],
+            "id": 260592,
+            "origin_country": [
+                "US"
+            ],
+            "original_language": "en",
+            "original_name": "Every Year After",
+            "overview": "Ambientata nell'arco di sei anni e una settimana a Barry's Bay -perfetta cittadina in riva al lago - Un anno dopo l'altro è una storia romantica e nostalgica sui primi amori e sulle persone e sulle scelte che ci segnano per sempre. La serie è l'adattamento del romanzo bestseller di Carley Fortune, \"Un'estate dopo l'altra\" - per 16 settimane nella classifica dei bestseller del New York Times, oltre un milione di copie vendute fino ad oggi e un grande successo del BookTok, con un totale di?81,4 milioni di visualizzazioni su TikTok.",
+            "popularity": 66.7077,
+            "poster_path": "/6q5bO7n6aFeygjfhuAVcqH72Gx0.jpg",
+            "first_air_date": "2026-06-10",
+            "softcore": false,
+            "name": "Un anno dopo l'altro",
+            "vote_average": 8.343,
+            "vote_count": 52
+        },
+        "322426": {
+            "adult": false,
+            "backdrop_path": "/cRknT4eCgtZqITvawDh9sBVVCde.jpg",
+            "genre_ids": [
+                99
+            ],
+            "id": 322426,
+            "origin_country": [
+                "NO"
+            ],
+            "original_language": "no",
+            "original_name": "Norges vei tilbake",
+            "overview": "Dopo 26 anni di assenza, le speranze della Norvegia per i mondiali 2026 erano praticamente nulle. Ma quanto accaduto ha riacceso l'entusiasmo, come racconta questo documentario.",
+            "popularity": 3.1639,
+            "poster_path": "/kZgzZsVgNruGRWKzTbAIfvvrvHJ.jpg",
+            "first_air_date": "2026-06-09",
+            "softcore": false,
+            "name": "Norvegia: la riscossa degli outsider",
+            "vote_average": 5.25,
+            "vote_count": 4
+        },
+        "204135": {
+            "adult": false,
+            "backdrop_path": "/hoLPJjPfYdEWJXG1y7OCgOeipaF.jpg",
+            "genre_ids": [
+                16,
+                10765,
+                10751,
+                10759
+            ],
+            "id": 204135,
+            "origin_country": [
+                "US"
+            ],
+            "original_language": "en",
+            "original_name": "Dragon Striker",
+            "overview": "In un mondo in cui sport e magia si fondono, Key, un ragazzo di campagna, scopre il suo straordinario talento naturale e apprende di poter diventare il leggendario Dragon Striker.",
+            "popularity": 12.4365,
+            "poster_path": "/a18A8XQPmuEBV6C4lQOdcKaNp09.jpg",
+            "first_air_date": "2026-06-09",
+            "softcore": false,
+            "name": "Dragon Striker",
+            "vote_average": 7.5,
+            "vote_count": 11
+        },
+        "318203": {
+            "adult": false,
+            "backdrop_path": "/1mN5cydNUFqd7MHfOwhcHZzLnvT.jpg",
+            "genre_ids": [
+                35,
+                18
+            ],
+            "id": 318203,
+            "origin_country": [
+                "GB"
+            ],
+            "original_language": "en",
+            "original_name": "Alice and Steve",
+            "overview": "Alice è sconvolta quando il suo migliore amico Steve inizia a frequentare sua figlia Izzy, di 26 anni. Sta per perdere il suo migliore amico e sua figlia in un colpo solo. Pertanto decide di ricorrere a qualsiasi mezzo a sua disposizione per porre fine alla relazione: dalle minacce alle suppliche, fino al sabotaggio della carriera di Steve. Sfortunatamente per lei, Steve è più che pronto a respingere l’attacco, e quella che era iniziata come un’amicizia perfetta degenera in una faida senza esclusione di colpi.",
+            "popularity": 5.7596,
+            "poster_path": "/gPou8wNiTz1uleLKllclrqanXXf.jpg",
+            "first_air_date": "2026-06-08",
+            "softcore": false,
+            "name": "Alice and Steve",
+            "vote_average": 6.7,
+            "vote_count": 12
+        },
+        "323039": {
+            "adult": false,
+            "backdrop_path": "/qskzSwDM0e5d8ZAK0MvTNwh2fg7.jpg",
+            "genre_ids": [
+                99
+            ],
+            "id": 323039,
+            "origin_country": [
+                "US"
+            ],
+            "original_language": "en",
+            "original_name": "Best of the World with Antoni Porowski",
+            "overview": "",
+            "popularity": 4.2105,
+            "poster_path": "/c75V0bZ6iu17ypYYPgDwVICBTUj.jpg",
+            "first_air_date": "2026-06-07",
+            "softcore": false,
+            "name": "Best of the World with Antoni Porowski",
+            "vote_average": 0.0,
+            "vote_count": 0
+        },
+        "317142": {
+            "adult": false,
+            "backdrop_path": "/4u16OqaVfs6qQ0DDUEK3Uo59wYK.jpg",
+            "genre_ids": [
+                35,
+                18
+            ],
+            "id": 317142,
+            "origin_country": [
+                "IN"
+            ],
+            "original_language": "hi",
+            "original_name": "द पिरामिड स्कीम",
+            "overview": "",
+            "popularity": 4.6022,
+            "poster_path": "/34sjPzz8xZCORirlywAJp1gUUyJ.jpg",
+            "first_air_date": "2026-06-05",
+            "softcore": false,
+            "name": "द पिरामिड स्कीम",
+            "vote_average": 0.0,
+            "vote_count": 0
+        }
+    }
+}
