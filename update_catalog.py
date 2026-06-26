@@ -11,6 +11,23 @@ TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 
 DB_FILE = "database.json"
 
+def get_genre_mapping():
+    """Scarica il dizionario dei generi per tradurre gli ID numerici in testo."""
+    genres = {}
+    try:
+        urls = [
+            f"https://api.themoviedb.org/3/genre/movie/list?api_key={TMDB_API_KEY}&language=it-IT",
+            f"https://api.themoviedb.org/3/genre/tv/list?api_key={TMDB_API_KEY}&language=it-IT"
+        ]
+        for url in urls:
+            resp = requests.get(url)
+            if resp.status_code == 200:
+                for g in resp.json().get("genres", []):
+                    genres[g["id"]] = g["name"]
+    except Exception as e:
+        print("Errore nel recupero generi:", e)
+    return genres
+
 def fetch_all_streaming_titles(content_type="movie"):
     """Estrae il 100% dei titoli spacchettando la ricerca anno per anno."""
     all_results = []
@@ -18,7 +35,6 @@ def fetch_all_streaming_titles(content_type="movie"):
     
     url = f"https://api.themoviedb.org/3/discover/{content_type}"
     
-    # Viaggio nel tempo: dal 1950 all'anno in corso
     for year in range(1950, current_year + 1):
         page = 1
         max_pages = 500
@@ -29,11 +45,10 @@ def fetch_all_streaming_titles(content_type="movie"):
                 "language": "it-IT",
                 "region": "IT",
                 "watch_region": "IT",
-                "with_watch_monetization_types": "flatrate|free|ads|rent|buy", # La chiave per avere TUTTE le piattaforme!
+                "with_watch_monetization_types": "flatrate|free|ads|rent|buy",
                 "page": page
             }
             
-            # Filtro per anno esatto in base a se è film o serie
             if content_type == "movie":
                 params["primary_release_year"] = year
             else:
@@ -45,19 +60,17 @@ def fetch_all_streaming_titles(content_type="movie"):
             
             results = data.get("results", [])
             if not results:
-                break # Pagina vuota, passiamo alla successiva
+                break 
                 
             all_results.extend(results)
-            
             total_pages = data.get("total_pages", 1)
             
             if page >= total_pages:
-                break # Finite le pagine di questo specifico anno!
+                break 
                 
             page += 1
-            time.sleep(0.05) # Pausa di sicurezza per l'API
+            time.sleep(0.05) 
             
-        # Stampiamo nei log di GitHub a che anno siamo arrivati
         print(f"Scaricati tutti i {content_type} dell'anno {year}...")
         
     return all_results
@@ -75,10 +88,14 @@ def send_telegram_message(text):
 def main():
     print("Avvio estrazione massiva assoluta su TMDB...")
     
+    # 1. Recuperiamo la mappa dei generi
+    GENRE_MAP = get_genre_mapping()
+    
+    # 2. Scarichiamo le liste generali
     movies = fetch_all_streaming_titles("movie")
     tv_shows = fetch_all_streaming_titles("tv")
     
-    # Carichiamo il DB esistente in modo sicuro
+    # 3. Carichiamo il DB esistente
     if os.path.exists(DB_FILE):
         try:
             with open(DB_FILE, "r", encoding="utf-8") as f:
@@ -88,31 +105,69 @@ def main():
     else:
         db = {"movies": {}, "tv_shows": {}}
 
-    new_additions = 0
+    elementi_aggiornati = 0
     
-    # Inserimento film
+    # 4. Elaborazione Film
     for item in movies:
         item_id = str(item["id"])
-        if item_id not in db["movies"]:
+        # Aggiorniamo se è nuovo o se gli mancano i nomi dei generi (aggiornamento per la nuova UI)
+        if item_id not in db["movies"] or "genre_names" not in db["movies"][item_id]:
+            item["genre_names"] = [GENRE_MAP.get(gid, "Sconosciuto") for gid in item.get("genre_ids", [])]
             db["movies"][item_id] = item
-            new_additions += 1
+            elementi_aggiornati += 1
 
-    # Inserimento serie TV
+    # 5. Elaborazione Serie TV (con estrazione dettagli extra)
+    print("\nInizio analisi dettagliata Serie TV (recupero info su interruzioni e stagioni)...")
     for item in tv_shows:
         item_id = str(item["id"])
-        if item_id not in db["tv_shows"]:
+        
+        # Entriamo qui se la serie è nuova OPPURE se è già nel DB ma non le abbiamo mai chiesto lo status
+        if item_id not in db["tv_shows"] or "status_ita" not in db["tv_shows"][item_id]:
+            item["genre_names"] = [GENRE_MAP.get(gid, "Sconosciuto") for gid in item.get("genre_ids", [])]
+            
+            # Chiamata specifica per i dettagli della singola serie TV
+            detail_url = f"https://api.themoviedb.org/3/tv/{item_id}"
+            params = {"api_key": TMDB_API_KEY, "language": "it-IT"}
+            try:
+                resp = requests.get(detail_url, params=params)
+                if resp.status_code == 200:
+                    details = resp.json()
+                    item["number_of_seasons"] = details.get("number_of_seasons", 0)
+                    item["number_of_episodes"] = details.get("number_of_episodes", 0)
+                    
+                    raw_status = details.get("status", "")
+                    if raw_status == "Canceled":
+                        item["status_ita"] = "🚨 CANCELLATA / INTERROTTA"
+                    elif raw_status == "Ended":
+                        item["status_ita"] = "✅ Conclusa"
+                    elif raw_status == "Returning Series":
+                        item["status_ita"] = "🔄 In corso (Rinnovata)"
+                    elif raw_status == "Miniseries":
+                        item["status_ita"] = "📺 Miniserie"
+                    else:
+                        item["status_ita"] = raw_status 
+                time.sleep(0.05) # Pausa vitale per non farsi bloccare da TMDB!
+            except Exception as e:
+                item["status_ita"] = "Sconosciuto"
+                item["number_of_seasons"] = 0
+                item["number_of_episodes"] = 0
+                
             db["tv_shows"][item_id] = item
-            new_additions += 1
+            elementi_aggiornati += 1
+            
+            # Un piccolo log per tenere traccia se stiamo macinando molti dati
+            if elementi_aggiornati % 500 == 0:
+                print(f"...elaborati {elementi_aggiornati} titoli dettagliati...")
 
-    # Salviamo il "mega" database aggiornato
+    # Salviamo il database aggiornato
     with open(DB_FILE, "w", encoding="utf-8") as f:
         json.dump(db, f, indent=4, ensure_ascii=False)
 
-    print(f"Estrazione completata! Aggiunti {new_additions} titoli totali al DB.")
+    print(f"\nEstrazione e patch completata! Elaborati/Aggiunti {elementi_aggiornati} titoli totali.")
     
-    # Notifica Telegram finale
+    # Notifica Telegram
     link_sito = "https://demon6x6.github.io/MyMovieAgent/" 
-    messaggio = f"🎬 <b>Estrazione Assoluta Completata!</b>\nHo trovato {new_additions} nuovi titoli.\nIl tuo archivio totale vanta ora <b>{len(db['movies'])} film</b> e <b>{len(db['tv_shows'])} serie TV</b>!\n\n🍿 Esplora tutto qui:\n{link_sito}"
+    messaggio = f"🎬 <b>Aggiornamento Profondo Completato!</b>\nHo aggiunto o aggiornato con i nuovi dettagli {elementi_aggiornati} titoli.\nIl database contiene <b>{len(db['movies'])} film</b> e <b>{len(db['tv_shows'])} serie TV</b>!\n\n🍿 Filtra per genere e scopri le serie interrotte qui:\n{link_sito}"
     
     send_telegram_message(messaggio)
 
