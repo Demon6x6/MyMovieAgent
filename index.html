@@ -10,10 +10,8 @@
         .netflix-red { color: #E50914; }
         .bg-netflix-red { background-color: #E50914; }
         .card:hover { transform: scale(1.05); transition: transform 0.3s ease-in-out; cursor: pointer; }
-        /* Nasconde la freccetta predefinita dei menu a tendina nativi */
         details > summary { list-style: none; }
         details > summary::-webkit-details-marker { display: none; }
-        /* Custom scrollbar per i filtri */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #1f2937; }
         ::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 4px; }
@@ -22,19 +20,18 @@
 </head>
 <body class="min-h-screen font-sans pb-10">
     
-<!-- Barra Superiore & Filtri -->
+    <!-- Barra Superiore & Filtri -->
     <header class="p-5 sticky top-0 z-50 bg-black/95 shadow-lg border-b border-gray-800">
         <h1 class="text-3xl font-bold netflix-red mb-4">🎬 My Weekend Agent</h1>
         
-        <!-- Qui ho sostituito md:items-center con items-start -->
         <div class="flex flex-col md:flex-row gap-4 items-start flex-wrap">
             <!-- Sezione Ricerca Testuale -->
             <div class="flex-1 min-w-[300px]">
-                <!-- Qui ho aggiunto la classe h-10 per parificare l'altezza -->
                 <input type="text" id="searchInput" placeholder="Cerca un titolo o una parola chiave..." class="w-full h-10 p-2 rounded bg-gray-800 text-white border border-gray-700 focus:border-red-600 outline-none transition-colors">
-                <div class="flex gap-4 mt-2 text-sm text-gray-400">
+                <div class="flex gap-4 mt-2 text-sm text-gray-400 flex-wrap">
                     <label class="cursor-pointer flex items-center"><input type="checkbox" id="searchTitle" checked class="mr-1 accent-red-600"> Cerca nel Titolo</label>
                     <label class="cursor-pointer flex items-center"><input type="checkbox" id="searchPlot" checked class="mr-1 accent-red-600"> Cerca nella Trama</label>
+                    <label class="cursor-pointer flex items-center text-red-300 ml-2"><input type="checkbox" id="excludeAnimation" class="mr-1 accent-red-600"> Escludi Animazione</label>
                 </div>
             </div>
             
@@ -75,15 +72,18 @@
         </div>
     </header>
 
+    <!-- Griglia Locandine -->
     <main class="p-5">
         <div id="resultsInfo" class="mb-6 text-gray-400 font-semibold text-lg flex justify-between items-end border-b border-gray-800 pb-2">
-            <span>Caricamento catalogo stellare in corso... 🚀</span>
+            <span>Caricamento catalogo in corso... 🚀</span>
         </div>
         
         <div id="mediaGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
-            </div>
+            <!-- Il JavaScript riempirà questo spazio -->
+        </div>
     </main>
 
+    <!-- Motore Logico (JavaScript) -->
     <script>
         let allMedia = [];
         let uniqueGenres = new Set();
@@ -94,7 +94,6 @@
                 const response = await fetch('database.json');
                 const db = await response.json();
                 
-                // Formattiamo e uniamo i dati
                 Object.values(db.movies).forEach(m => {
                     const year = m.release_date ? m.release_date.substring(0,4) : null;
                     if(year) uniqueYears.add(year);
@@ -113,12 +112,11 @@
                 populateDynamicFilters();
                 renderGrid();
             } catch (e) {
-                document.getElementById('resultsInfo').innerHTML = "<span class='text-red-500'>Ops! Errore nel caricamento del database. L'Agente sta ancora scaricando i dati?</span>";
+                document.getElementById('resultsInfo').innerHTML = "<span class='text-red-500'>Ops! Errore nel caricamento del database.</span>";
             }
         }
 
         function populateDynamicFilters() {
-            // Popola Generi in ordine alfabetico
             const genreContainer = document.getElementById('genreCheckboxes');
             Array.from(uniqueGenres).sort().forEach(genre => {
                 genreContainer.innerHTML += `
@@ -129,7 +127,6 @@
                 `;
             });
 
-            // Popola Anni dal più recente al più vecchio
             const yearContainer = document.getElementById('yearCheckboxes');
             Array.from(uniqueYears).sort((a,b) => b - a).forEach(year => {
                 yearContainer.innerHTML += `
@@ -140,7 +137,6 @@
                 `;
             });
 
-            // Aggiungiamo i listener ai nuovi checkbox appena creati
             document.querySelectorAll('.genre-cb, .year-cb').forEach(cb => {
                 cb.addEventListener('change', renderGrid);
             });
@@ -150,31 +146,29 @@
             const searchInput = document.getElementById('searchInput').value.toLowerCase();
             const searchTitle = document.getElementById('searchTitle').checked;
             const searchPlot = document.getElementById('searchPlot').checked;
+            const excludeAnimation = document.getElementById('excludeAnimation').checked;
             const typeFilter = document.getElementById('typeFilter').value;
             const sortFilter = document.getElementById('sortFilter').value;
             
-            // Raccoglie i filtri multi-selezione attivi
             const selectedGenres = Array.from(document.querySelectorAll('.genre-cb:checked')).map(cb => cb.value);
             const selectedYears = Array.from(document.querySelectorAll('.year-cb:checked')).map(cb => cb.value);
 
-            // Applica i filtri
             let filtered = allMedia.filter(item => {
-                // Filtro Tipo
                 if (typeFilter !== 'all' && item.media_type !== typeFilter) return false;
                 
-                // Filtro Ricerca
                 if (searchInput) {
                     const inTitle = searchTitle && item.title && item.title.toLowerCase().includes(searchInput);
                     const inPlot = searchPlot && item.overview && item.overview.toLowerCase().includes(searchInput);
                     if (!inTitle && !inPlot) return false;
                 }
                 
-                // Filtro Multi-Selezione Genere (l'item deve avere almeno uno dei generi selezionati)
+                // Filtro Esclusione Animazione
+                if (excludeAnimation && item.genre_names && item.genre_names.includes("Animazione")) return false;
+                
                 if (selectedGenres.length > 0) {
                     if (!item.genre_names || !item.genre_names.some(g => selectedGenres.includes(g))) return false;
                 }
                 
-                // Filtro Multi-Selezione Anno
                 if (selectedYears.length > 0) {
                     if (!selectedYears.includes(item.year)) return false;
                 }
@@ -182,19 +176,16 @@
                 return true;
             });
 
-            // Ordinamento
             filtered.sort((a, b) => {
                 if (sortFilter === 'newest') return new Date(b.date || 0) - new Date(a.date || 0);
                 if (sortFilter === 'oldest') return new Date(a.date || 0) - new Date(b.date || 0);
                 if (sortFilter === 'rating') return (b.vote_average || 0) - (a.vote_average || 0);
             });
 
-            // Disegna la griglia
             const grid = document.getElementById('mediaGrid');
             grid.innerHTML = '';
-            document.getElementById('resultsInfo').innerHTML = `<span>Trovati <b class="text-white">${filtered.length}</b> titoli nel tuo archivio privato</span>`;
+            document.getElementById('resultsInfo').innerHTML = `<span>Trovati <b class="text-white">${filtered.length}</b> titoli visibili</span>`;
 
-            // Limitiamo il rendering iniziale a 300 per non bloccare il browser, utile se non ci sono filtri attivi
             const itemsToRender = filtered.slice(0, 300);
 
             itemsToRender.forEach(item => {
@@ -202,14 +193,12 @@
                 const rating = item.vote_average ? (item.vote_average / 2).toFixed(1) : 'N/A';
                 const genresText = item.genre_names ? item.genre_names.slice(0,3).join(', ') : '';
                 
-                // Generazione Informazioni Serie TV (Stagioni e Status)
                 let extraTvInfo = '';
                 if (item.media_type === 'tv') {
                     const seasons = item.number_of_seasons || "?";
                     const episodes = item.number_of_episodes || "?";
                     
-                    // Colore del badge status
-                    let statusColor = 'bg-gray-600 text-gray-200'; // Default
+                    let statusColor = 'bg-gray-600 text-gray-200';
                     if (item.status_ita && item.status_ita.includes('🚨')) statusColor = 'bg-red-600 text-white font-bold animate-pulse';
                     else if (item.status_ita && item.status_ita.includes('✅')) statusColor = 'bg-green-600 text-white font-bold';
                     else if (item.status_ita && item.status_ita.includes('🔄')) statusColor = 'bg-blue-600 text-white font-bold';
@@ -249,14 +238,13 @@
             }
         }
 
-        // Ascoltatori Eventi Base
         document.getElementById('searchInput').addEventListener('input', renderGrid);
         document.getElementById('searchTitle').addEventListener('change', renderGrid);
         document.getElementById('searchPlot').addEventListener('change', renderGrid);
+        document.getElementById('excludeAnimation').addEventListener('change', renderGrid);
         document.getElementById('typeFilter').addEventListener('change', renderGrid);
         document.getElementById('sortFilter').addEventListener('change', renderGrid);
 
-        // Partenza
         loadData();
     </script>
 </body>
