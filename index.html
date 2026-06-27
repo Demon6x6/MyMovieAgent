@@ -22,18 +22,23 @@
 </head>
 <body class="min-h-screen font-sans pb-10">
     
+<!-- Barra Superiore & Filtri -->
     <header class="p-5 sticky top-0 z-50 bg-black/95 shadow-lg border-b border-gray-800">
         <h1 class="text-3xl font-bold netflix-red mb-4">🎬 My Weekend Agent</h1>
         
-        <div class="flex flex-col md:flex-row gap-4 items-start md:items-center flex-wrap">
+        <!-- Qui ho sostituito md:items-center con items-start -->
+        <div class="flex flex-col md:flex-row gap-4 items-start flex-wrap">
+            <!-- Sezione Ricerca Testuale -->
             <div class="flex-1 min-w-[300px]">
-                <input type="text" id="searchInput" placeholder="Cerca un titolo o una parola chiave..." class="w-full p-2 rounded bg-gray-800 text-white border border-gray-700 focus:border-red-600 outline-none transition-colors">
+                <!-- Qui ho aggiunto la classe h-10 per parificare l'altezza -->
+                <input type="text" id="searchInput" placeholder="Cerca un titolo o una parola chiave..." class="w-full h-10 p-2 rounded bg-gray-800 text-white border border-gray-700 focus:border-red-600 outline-none transition-colors">
                 <div class="flex gap-4 mt-2 text-sm text-gray-400">
                     <label class="cursor-pointer flex items-center"><input type="checkbox" id="searchTitle" checked class="mr-1 accent-red-600"> Cerca nel Titolo</label>
                     <label class="cursor-pointer flex items-center"><input type="checkbox" id="searchPlot" checked class="mr-1 accent-red-600"> Cerca nella Trama</label>
                 </div>
             </div>
             
+            <!-- Sezione Filtri -->
             <div class="flex flex-wrap gap-3">
                 <select id="typeFilter" class="p-2 h-10 bg-gray-800 rounded border border-gray-700 text-sm outline-none cursor-pointer hover:bg-gray-700 transition">
                     <option value="all">Tutti (Film e Serie)</option>
@@ -41,20 +46,24 @@
                     <option value="tv">Solo Serie TV</option>
                 </select>
 
+                <!-- Filtro Generi (Multi-Selezione Dinamica) -->
                 <details class="relative group">
                     <summary class="p-2 h-10 flex items-center bg-gray-800 hover:bg-gray-700 transition rounded border border-gray-700 outline-none cursor-pointer text-sm">
                         Generi ▾
                     </summary>
                     <div id="genreCheckboxes" class="absolute left-0 md:right-0 md:left-auto mt-1 w-56 max-h-64 overflow-y-auto bg-gray-800 border border-gray-700 rounded shadow-2xl p-3 flex flex-col gap-2">
-                        </div>
+                        <!-- Generato da JavaScript -->
+                    </div>
                 </details>
 
+                <!-- Filtro Anni (Multi-Selezione Dinamica) -->
                 <details class="relative group">
                     <summary class="p-2 h-10 flex items-center bg-gray-800 hover:bg-gray-700 transition rounded border border-gray-700 outline-none cursor-pointer text-sm">
                         Anno di Uscita ▾
                     </summary>
                     <div id="yearCheckboxes" class="absolute left-0 md:right-0 md:left-auto mt-1 w-40 max-h-64 overflow-y-auto bg-gray-800 border border-gray-700 rounded shadow-2xl p-3 flex flex-col gap-2">
-                        </div>
+                        <!-- Generato da JavaScript -->
+                    </div>
                 </details>
                 
                 <select id="sortFilter" class="p-2 h-10 bg-gray-800 rounded border border-gray-700 text-sm outline-none cursor-pointer hover:bg-gray-700 transition">
