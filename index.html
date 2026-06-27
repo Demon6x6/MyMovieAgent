@@ -3,14 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie & Series Agent</title>
+    <title>My Weekend Agent - Il Tuo Catalogo</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { background-color: #141414; color: white; }
         .netflix-red { color: #E50914; }
         .bg-netflix-red { background-color: #E50914; }
-        /* Effetto ingrandimento al passaggio del mouse sulle locandine */
         .card:hover { transform: scale(1.05); transition: transform 0.3s ease-in-out; cursor: pointer; }
+        /* Nasconde la freccetta predefinita dei menu a tendina nativi */
+        details > summary { list-style: none; }
+        details > summary::-webkit-details-marker { display: none; }
+        /* Custom scrollbar per i filtri */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1f2937; }
+        ::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #E50914; }
     </style>
 </head>
 <body class="min-h-screen font-sans pb-10">
@@ -18,56 +25,116 @@
     <header class="p-5 sticky top-0 z-50 bg-black/95 shadow-lg border-b border-gray-800">
         <h1 class="text-3xl font-bold netflix-red mb-4">🎬 My Weekend Agent</h1>
         
-        <div class="flex flex-col md:flex-row gap-4">
-            <div class="flex-1">
+        <div class="flex flex-col md:flex-row gap-4 items-start md:items-center flex-wrap">
+            <div class="flex-1 min-w-[300px]">
                 <input type="text" id="searchInput" placeholder="Cerca un titolo o una parola chiave..." class="w-full p-2 rounded bg-gray-800 text-white border border-gray-700 focus:border-red-600 outline-none transition-colors">
                 <div class="flex gap-4 mt-2 text-sm text-gray-400">
-                    <label class="cursor-pointer"><input type="checkbox" id="searchTitle" checked class="mr-1 accent-red-600"> Cerca nel Titolo</label>
-                    <label class="cursor-pointer"><input type="checkbox" id="searchPlot" checked class="mr-1 accent-red-600"> Cerca nella Trama</label>
+                    <label class="cursor-pointer flex items-center"><input type="checkbox" id="searchTitle" checked class="mr-1 accent-red-600"> Cerca nel Titolo</label>
+                    <label class="cursor-pointer flex items-center"><input type="checkbox" id="searchPlot" checked class="mr-1 accent-red-600"> Cerca nella Trama</label>
                 </div>
             </div>
             
-            <select id="typeFilter" class="p-2 bg-gray-800 rounded border border-gray-700 outline-none cursor-pointer">
-                <option value="all">Tutti (Film e Serie)</option>
-                <option value="movies">Solo Film</option>
-                <option value="tv">Solo Serie TV</option>
-            </select>
-            
-            <select id="sortFilter" class="p-2 bg-gray-800 rounded border border-gray-700 outline-none cursor-pointer">
-                <option value="newest">Uscite più recenti</option>
-                <option value="oldest">Uscite meno recenti</option>
-                <option value="rating">Voto più alto</option>
-            </select>
+            <div class="flex flex-wrap gap-3">
+                <select id="typeFilter" class="p-2 h-10 bg-gray-800 rounded border border-gray-700 text-sm outline-none cursor-pointer hover:bg-gray-700 transition">
+                    <option value="all">Tutti (Film e Serie)</option>
+                    <option value="movies">Solo Film</option>
+                    <option value="tv">Solo Serie TV</option>
+                </select>
+
+                <details class="relative group">
+                    <summary class="p-2 h-10 flex items-center bg-gray-800 hover:bg-gray-700 transition rounded border border-gray-700 outline-none cursor-pointer text-sm">
+                        Generi ▾
+                    </summary>
+                    <div id="genreCheckboxes" class="absolute left-0 md:right-0 md:left-auto mt-1 w-56 max-h-64 overflow-y-auto bg-gray-800 border border-gray-700 rounded shadow-2xl p-3 flex flex-col gap-2">
+                        </div>
+                </details>
+
+                <details class="relative group">
+                    <summary class="p-2 h-10 flex items-center bg-gray-800 hover:bg-gray-700 transition rounded border border-gray-700 outline-none cursor-pointer text-sm">
+                        Anno di Uscita ▾
+                    </summary>
+                    <div id="yearCheckboxes" class="absolute left-0 md:right-0 md:left-auto mt-1 w-40 max-h-64 overflow-y-auto bg-gray-800 border border-gray-700 rounded shadow-2xl p-3 flex flex-col gap-2">
+                        </div>
+                </details>
+                
+                <select id="sortFilter" class="p-2 h-10 bg-gray-800 rounded border border-gray-700 text-sm outline-none cursor-pointer hover:bg-gray-700 transition">
+                    <option value="newest">Uscite più recenti</option>
+                    <option value="oldest">Uscite meno recenti</option>
+                    <option value="rating">Voto più alto</option>
+                </select>
+            </div>
         </div>
     </header>
 
     <main class="p-5">
-        <div id="resultsInfo" class="mb-6 text-gray-400 font-semibold text-lg">Caricamento in corso...</div>
-        <div id="mediaGrid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+        <div id="resultsInfo" class="mb-6 text-gray-400 font-semibold text-lg flex justify-between items-end border-b border-gray-800 pb-2">
+            <span>Caricamento catalogo stellare in corso... 🚀</span>
+        </div>
+        
+        <div id="mediaGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
             </div>
     </main>
 
     <script>
         let allMedia = [];
+        let uniqueGenres = new Set();
+        let uniqueYears = new Set();
 
         async function loadData() {
             try {
-                // Legge il database aggiornato dal nostro Agente Python
                 const response = await fetch('database.json');
                 const db = await response.json();
                 
-                // Uniamo film e serie in un unico grande elenco per facilitarci il filtraggio
+                // Formattiamo e uniamo i dati
                 Object.values(db.movies).forEach(m => {
-                    allMedia.push({...m, media_type: 'movies', date: m.release_date, title: m.title || m.original_title});
+                    const year = m.release_date ? m.release_date.substring(0,4) : null;
+                    if(year) uniqueYears.add(year);
+                    if(m.genre_names) m.genre_names.forEach(g => uniqueGenres.add(g));
+                    
+                    allMedia.push({...m, media_type: 'movies', date: m.release_date, title: m.title || m.original_title, year: year});
                 });
                 Object.values(db.tv_shows).forEach(t => {
-                    allMedia.push({...t, media_type: 'tv', date: t.first_air_date, title: t.name || t.original_name});
+                    const year = t.first_air_date ? t.first_air_date.substring(0,4) : null;
+                    if(year) uniqueYears.add(year);
+                    if(t.genre_names) t.genre_names.forEach(g => uniqueGenres.add(g));
+                    
+                    allMedia.push({...t, media_type: 'tv', date: t.first_air_date, title: t.name || t.original_name, year: year});
                 });
                 
+                populateDynamicFilters();
                 renderGrid();
             } catch (e) {
-                document.getElementById('resultsInfo').innerText = "Ops! Errore nel caricamento del database o file vuoto.";
+                document.getElementById('resultsInfo').innerHTML = "<span class='text-red-500'>Ops! Errore nel caricamento del database. L'Agente sta ancora scaricando i dati?</span>";
             }
+        }
+
+        function populateDynamicFilters() {
+            // Popola Generi in ordine alfabetico
+            const genreContainer = document.getElementById('genreCheckboxes');
+            Array.from(uniqueGenres).sort().forEach(genre => {
+                genreContainer.innerHTML += `
+                    <label class="flex items-center space-x-2 cursor-pointer text-sm text-gray-300 hover:text-white transition">
+                        <input type="checkbox" value="${genre}" class="genre-cb accent-red-600 w-4 h-4 rounded">
+                        <span>${genre}</span>
+                    </label>
+                `;
+            });
+
+            // Popola Anni dal più recente al più vecchio
+            const yearContainer = document.getElementById('yearCheckboxes');
+            Array.from(uniqueYears).sort((a,b) => b - a).forEach(year => {
+                yearContainer.innerHTML += `
+                    <label class="flex items-center space-x-2 cursor-pointer text-sm text-gray-300 hover:text-white transition">
+                        <input type="checkbox" value="${year}" class="year-cb accent-red-600 w-4 h-4 rounded">
+                        <span>${year}</span>
+                    </label>
+                `;
+            });
+
+            // Aggiungiamo i listener ai nuovi checkbox appena creati
+            document.querySelectorAll('.genre-cb, .year-cb').forEach(cb => {
+                cb.addEventListener('change', renderGrid);
+            });
         }
 
         function renderGrid() {
@@ -76,68 +143,111 @@
             const searchPlot = document.getElementById('searchPlot').checked;
             const typeFilter = document.getElementById('typeFilter').value;
             const sortFilter = document.getElementById('sortFilter').value;
+            
+            // Raccoglie i filtri multi-selezione attivi
+            const selectedGenres = Array.from(document.querySelectorAll('.genre-cb:checked')).map(cb => cb.value);
+            const selectedYears = Array.from(document.querySelectorAll('.year-cb:checked')).map(cb => cb.value);
 
-            // Filtriamo
+            // Applica i filtri
             let filtered = allMedia.filter(item => {
+                // Filtro Tipo
                 if (typeFilter !== 'all' && item.media_type !== typeFilter) return false;
                 
+                // Filtro Ricerca
                 if (searchInput) {
                     const inTitle = searchTitle && item.title && item.title.toLowerCase().includes(searchInput);
                     const inPlot = searchPlot && item.overview && item.overview.toLowerCase().includes(searchInput);
-                    if (!inTitle && !inPlot) return false; // Se non è né nel titolo né nella trama, scartalo
+                    if (!inTitle && !inPlot) return false;
                 }
+                
+                // Filtro Multi-Selezione Genere (l'item deve avere almeno uno dei generi selezionati)
+                if (selectedGenres.length > 0) {
+                    if (!item.genre_names || !item.genre_names.some(g => selectedGenres.includes(g))) return false;
+                }
+                
+                // Filtro Multi-Selezione Anno
+                if (selectedYears.length > 0) {
+                    if (!selectedYears.includes(item.year)) return false;
+                }
+                
                 return true;
             });
 
-            // Ordiniamo
+            // Ordinamento
             filtered.sort((a, b) => {
                 if (sortFilter === 'newest') return new Date(b.date || 0) - new Date(a.date || 0);
                 if (sortFilter === 'oldest') return new Date(a.date || 0) - new Date(b.date || 0);
                 if (sortFilter === 'rating') return (b.vote_average || 0) - (a.vote_average || 0);
             });
 
-            // Disegniamo la griglia
+            // Disegna la griglia
             const grid = document.getElementById('mediaGrid');
             grid.innerHTML = '';
-            document.getElementById('resultsInfo').innerText = `Trovati ${filtered.length} risultati visibili`;
+            document.getElementById('resultsInfo').innerHTML = `<span>Trovati <b class="text-white">${filtered.length}</b> titoli nel tuo archivio privato</span>`;
 
-            filtered.forEach(item => {
-                // Gestione locandina assente
-                const poster = item.poster_path ? `https://image.tmdb.org/t/p/w500${item.poster_path}` : 'https://via.placeholder.com/500x750/333333/ffffff?text=No+Poster';
-                
-                // Trasformiamo il voto da scala decimi a scala 5 stelle (es. 8.4 -> 4.2)
+            // Limitiamo il rendering iniziale a 300 per non bloccare il browser, utile se non ci sono filtri attivi
+            const itemsToRender = filtered.slice(0, 300);
+
+            itemsToRender.forEach(item => {
+                const poster = item.poster_path ? `https://image.tmdb.org/t/p/w500${item.poster_path}` : 'https://via.placeholder.com/500x750/333333/ffffff?text=Nessuna+Locandina';
                 const rating = item.vote_average ? (item.vote_average / 2).toFixed(1) : 'N/A';
+                const genresText = item.genre_names ? item.genre_names.slice(0,3).join(', ') : '';
                 
-                // Formattazione data solo anno
-                const year = item.date ? item.date.substring(0,4) : 'N/A';
-                
-                const card = document.createElement('div');
-                card.className = 'card relative rounded-lg overflow-hidden shadow-xl bg-gray-900 group';
-                card.innerHTML = `
-                    <img src="${poster}" alt="${item.title}" class="w-full h-full object-cover aspect-[2/3]" loading="lazy">
-                    <div class="absolute inset-0 bg-black bg-opacity-90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 flex flex-col justify-between">
-                        <div>
-                            <h2 class="text-md font-bold mb-1 text-white">${item.title}</h2>
-                            <p class="text-xs text-gray-400 mb-2">${year} | ⭐️ ${rating} / 5</p>
-                            <p class="text-xs text-gray-300 line-clamp-6 leading-tight">${item.overview || 'Trama non disponibile.'}</p>
+                // Generazione Informazioni Serie TV (Stagioni e Status)
+                let extraTvInfo = '';
+                if (item.media_type === 'tv') {
+                    const seasons = item.number_of_seasons || "?";
+                    const episodes = item.number_of_episodes || "?";
+                    
+                    // Colore del badge status
+                    let statusColor = 'bg-gray-600 text-gray-200'; // Default
+                    if (item.status_ita && item.status_ita.includes('🚨')) statusColor = 'bg-red-600 text-white font-bold animate-pulse';
+                    else if (item.status_ita && item.status_ita.includes('✅')) statusColor = 'bg-green-600 text-white font-bold';
+                    else if (item.status_ita && item.status_ita.includes('🔄')) statusColor = 'bg-blue-600 text-white font-bold';
+                    
+                    const statusBadge = item.status_ita ? `<span class="inline-block mt-2 px-2 py-1 text-[11px] rounded ${statusColor} shadow-md">${item.status_ita}</span>` : '';
+                    
+                    extraTvInfo = `
+                        <div class="mt-2 pt-2 border-t border-gray-700">
+                            <p class="text-xs text-yellow-400 font-medium">📺 ${seasons} Stagioni (${episodes} Episodi)</p>
+                            ${statusBadge}
                         </div>
-                        <a href="https://www.youtube.com/results?search_query=trailer+ita+${encodeURIComponent(item.title)}" target="_blank" class="block w-full mt-3 text-sm font-semibold text-center bg-netflix-red text-white py-2 rounded transition hover:bg-red-700">
-                            Guarda Trailer
-                        </a>
+                    `;
+                }
+
+                const card = document.createElement('div');
+                card.className = 'card relative rounded-lg overflow-hidden shadow-xl bg-gray-900 group h-full flex flex-col';
+                card.innerHTML = `
+                    <div class="relative aspect-[2/3] w-full overflow-hidden">
+                        <img src="${poster}" alt="${item.title}" class="w-full h-full object-cover" loading="lazy">
+                        <div class="absolute inset-0 bg-black bg-opacity-95 opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 flex flex-col overflow-y-auto">
+                            <h2 class="text-lg font-extrabold mb-1 leading-tight text-white">${item.title}</h2>
+                            <p class="text-xs text-gray-400 font-bold mb-2">${item.year || 'N/A'} | ⭐️ ${rating}/5</p>
+                            <p class="text-[10px] text-red-400 font-semibold mb-2 uppercase">${genresText}</p>
+                            <p class="text-xs text-gray-300 leading-snug flex-grow">${item.overview || 'Nessuna trama disponibile in italiano.'}</p>
+                            ${extraTvInfo}
+                        </div>
                     </div>
+                    <a href="https://www.youtube.com/results?search_query=trailer+ita+${encodeURIComponent(item.title)}" target="_blank" class="block w-full text-xs font-bold text-center bg-netflix-red text-white py-2 transition hover:bg-red-700 z-10">
+                        Guarda Trailer
+                    </a>
                 `;
                 grid.appendChild(card);
             });
+            
+            if (filtered.length > 300) {
+                 grid.innerHTML += `<div class="col-span-full text-center p-5 text-gray-500 italic">Sono stati caricati i primi 300 risultati. Usa i filtri per restringere la ricerca!</div>`;
+            }
         }
 
-        // Ascoltiamo i cambiamenti dell'utente in tempo reale
+        // Ascoltatori Eventi Base
         document.getElementById('searchInput').addEventListener('input', renderGrid);
         document.getElementById('searchTitle').addEventListener('change', renderGrid);
         document.getElementById('searchPlot').addEventListener('change', renderGrid);
         document.getElementById('typeFilter').addEventListener('change', renderGrid);
         document.getElementById('sortFilter').addEventListener('change', renderGrid);
 
-        // Avvio automatico al caricamento della pagina
+        // Partenza
         loadData();
     </script>
 </body>
