@@ -81,21 +81,18 @@ def send_telegram_message(text):
     payload = {
         "chat_id": TELEGRAM_CHAT_ID,
         "text": text,
-        "parse_mode": "HTML"
+        "parse_mode": "HTML",
+        "disable_web_page_preview": True # Disabilita l'anteprima ingombrante del link su Telegram
     }
     requests.post(url, json=payload)
 
 def main():
     print("Avvio estrazione massiva assoluta su TMDB...")
     
-    # 1. Recuperiamo la mappa dei generi
     GENRE_MAP = get_genre_mapping()
-    
-    # 2. Scarichiamo le liste generali
     movies = fetch_all_streaming_titles("movie")
     tv_shows = fetch_all_streaming_titles("tv")
     
-    # 3. Carichiamo il DB esistente
     if os.path.exists(DB_FILE):
         try:
             with open(DB_FILE, "r", encoding="utf-8") as f:
@@ -105,27 +102,31 @@ def main():
     else:
         db = {"movies": {}, "tv_shows": {}}
 
-    elementi_aggiornati = 0
+    nuovi_aggiunti = 0
+    titoli_aggiornati = 0
     
-    # 4. Elaborazione Film
+    # Elaborazione Film
     for item in movies:
         item_id = str(item["id"])
-        # Aggiorniamo se è nuovo o se gli mancano i nomi dei generi (aggiornamento per la nuova UI)
-        if item_id not in db["movies"] or "genre_names" not in db["movies"][item_id]:
+        if item_id not in db["movies"]:
             item["genre_names"] = [GENRE_MAP.get(gid, "Sconosciuto") for gid in item.get("genre_ids", [])]
             db["movies"][item_id] = item
-            elementi_aggiornati += 1
+            nuovi_aggiunti += 1
+        elif "genre_names" not in db["movies"][item_id]:
+            item["genre_names"] = [GENRE_MAP.get(gid, "Sconosciuto") for gid in item.get("genre_ids", [])]
+            db["movies"][item_id] = item
+            titoli_aggiornati += 1
 
-    # 5. Elaborazione Serie TV (con estrazione dettagli extra)
-    print("\nInizio analisi dettagliata Serie TV (recupero info su interruzioni e stagioni)...")
+    # Elaborazione Serie TV
+    print("\nInizio analisi dettagliata Serie TV...")
     for item in tv_shows:
         item_id = str(item["id"])
+        is_new = item_id not in db["tv_shows"]
+        needs_update = is_new or "status_ita" not in db["tv_shows"][item_id]
         
-        # Entriamo qui se la serie è nuova OPPURE se è già nel DB ma non le abbiamo mai chiesto lo status
-        if item_id not in db["tv_shows"] or "status_ita" not in db["tv_shows"][item_id]:
+        if needs_update:
             item["genre_names"] = [GENRE_MAP.get(gid, "Sconosciuto") for gid in item.get("genre_ids", [])]
             
-            # Chiamata specifica per i dettagli della singola serie TV
             detail_url = f"https://api.themoviedb.org/3/tv/{item_id}"
             params = {"api_key": TMDB_API_KEY, "language": "it-IT"}
             try:
@@ -146,28 +147,33 @@ def main():
                         item["status_ita"] = "📺 Miniserie"
                     else:
                         item["status_ita"] = raw_status 
-                time.sleep(0.05) # Pausa vitale per non farsi bloccare da TMDB!
+                time.sleep(0.05) 
             except Exception as e:
                 item["status_ita"] = "Sconosciuto"
                 item["number_of_seasons"] = 0
                 item["number_of_episodes"] = 0
                 
             db["tv_shows"][item_id] = item
-            elementi_aggiornati += 1
             
-            # Un piccolo log per tenere traccia se stiamo macinando molti dati
-            if elementi_aggiornati % 500 == 0:
-                print(f"...elaborati {elementi_aggiornati} titoli dettagliati...")
+            if is_new:
+                nuovi_aggiunti += 1
+            else:
+                titoli_aggiornati += 1
+                
+            if (nuovi_aggiunti + titoli_aggiornati) % 500 == 0:
+                print(f"...elaborati {nuovi_aggiunti + titoli_aggiornati} titoli dettagliati...")
 
-    # Salviamo il database aggiornato
     with open(DB_FILE, "w", encoding="utf-8") as f:
         json.dump(db, f, indent=4, ensure_ascii=False)
 
-    print(f"\nEstrazione e patch completata! Elaborati/Aggiunti {elementi_aggiornati} titoli totali.")
+    print(f"\nEstrazione completata! Aggiunti: {nuovi_aggiunti}, Aggiornati: {titoli_aggiornati}")
     
-    # Notifica Telegram
-    link_sito = "https://demon6x6.github.io/MyMovieAgent/" 
-    messaggio = f"🎬 <b>Aggiornamento Profondo Completato!</b>\nHo aggiunto o aggiornato con i nuovi dettagli {elementi_aggiornati} titoli.\nIl database contiene <b>{len(db['movies'])} film</b> e <b>{len(db['tv_shows'])} serie TV</b>!\n\n🍿 Filtra per genere e scopri le serie interrotte qui:\n{link_sito}"
+    link_sito = "https://demon6x6.github.io/MyMovieAgent/"
+    messaggio = f"🎬 <b>Resoconto Agente</b>\n" \
+                f"➕ Nuovi titoli trovati oggi: <b>{nuovi_aggiunti}</b>\n" \
+                f"🔄 Titoli pre-esistenti aggiornati: <b>{titoli_aggiornati}</b>\n\n" \
+                f"📊 Il tuo database conta ora <b>{len(db['movies'])} film</b> e <b>{len(db['tv_shows'])} serie TV</b>!\n\n" \
+                f"🍿 Sfoglia il catalogo qui:\n{link_sito}"
     
     send_telegram_message(messaggio)
 
