@@ -82,9 +82,13 @@ def send_telegram_message(text):
         "chat_id": TELEGRAM_CHAT_ID,
         "text": text,
         "parse_mode": "HTML",
-        "disable_web_page_preview": True # Disabilita l'anteprima ingombrante del link su Telegram
+        "link_preview_options": {"is_disabled": True} # Nuova sintassi aggiornata per le API di Telegram
     }
-    requests.post(url, json=payload)
+    response = requests.post(url, json=payload)
+    if response.status_code != 200:
+        print(f"ERRORE TELEGRAM: {response.text}")
+    # Questa istruzione forzerà il log di GitHub a darci errore visibile in caso di fallimento
+    response.raise_for_status() 
 
 def main():
     print("Avvio estrazione massiva assoluta su TMDB...")
@@ -105,7 +109,6 @@ def main():
     nuovi_aggiunti = 0
     titoli_aggiornati = 0
     
-    # Elaborazione Film
     for item in movies:
         item_id = str(item["id"])
         if item_id not in db["movies"]:
@@ -117,7 +120,6 @@ def main():
             db["movies"][item_id] = item
             titoli_aggiornati += 1
 
-    # Elaborazione Serie TV
     print("\nInizio analisi dettagliata Serie TV...")
     for item in tv_shows:
         item_id = str(item["id"])
@@ -163,8 +165,9 @@ def main():
             if (nuovi_aggiunti + titoli_aggiornati) % 500 == 0:
                 print(f"...elaborati {nuovi_aggiunti + titoli_aggiornati} titoli dettagliati...")
 
+    # MODIFICA SALVAVITA: json compressato (minificato) rimuovendo l'indentazione
     with open(DB_FILE, "w", encoding="utf-8") as f:
-        json.dump(db, f, indent=4, ensure_ascii=False)
+        json.dump(db, f, separators=(',', ':'), ensure_ascii=False)
 
     print(f"\nEstrazione completata! Aggiunti: {nuovi_aggiunti}, Aggiornati: {titoli_aggiornati}")
     
